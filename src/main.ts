@@ -14,7 +14,7 @@ const createWindow = () => {
     autoHideMenuBar: true,
   })
 
-  win.title = 'Hello World | Electron'
+  win.title = 'Simple Clock'
   win.loadURL(`http://localhost:${PORT}`)
   win.on('closed', () => {
     win = null
