@@ -6,7 +6,7 @@
   "scripts": {
     "transpile": "tsc",
     "watch": "ts-node-dev --respawn --poll ./src/main.ts",
-    "app": "electron .",
+    "app": "npm run transpile && electron .",
     "build": "electron-packager . --out=build --overwrite",
     "clean-build": "rimraf build",
     "clean-transpile": "rimraf dist",
