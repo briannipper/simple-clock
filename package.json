@@ -25,7 +25,9 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.2.0",
     "eslint-plugin-promise": "^6.0.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "source-map-loader": "^3.0.1",
+    "ts-loader": "^9.3.0"
   },
   "dependencies": {
     "@types/express": "^4.17.13",

@@ -1,20 +1,26 @@
 import { app, BrowserWindow } from 'electron'
 import express from 'express'
 import path from 'path'
+import { ClockApp } from './ClockApp'
 
 const PORT = 7259
 
 let win: BrowserWindow | null
+const clockApp: ClockApp = new ClockApp()
 
 const createWindow = () => {
   win = new BrowserWindow({
-    width: 600,
-    height: 600,
+    autoHideMenuBar: true,
     backgroundColor: '#ffffff',
-    autoHideMenuBar: true
+    height: 600,
+    webPreferences:
+    {
+      preload: path.join(__dirname, 'preload.js')
+    },
+    width: 600
   })
 
-  win.title = 'Simple Clock'
+  win.title = clockApp.appTitle
   win.loadURL(`http://localhost:${PORT}`)
   win.on('closed', () => {
     win = null
