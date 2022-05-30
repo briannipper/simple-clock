@@ -17,9 +17,14 @@
 </head>
 
 <body style="font-family: Arial, Helvetica, sans-serif;">
+
 	<div>
 		<button id="messageButton" type='button' onclick='loadDoc()'>Get Message</button>
-		<h1 id='heading'></h1>
+		<h2 id='heading'></h2>
+	</div>
+
+	<div>
+				
 	</div>
 
 	<footer style="font-size: 9px;">
@@ -28,27 +33,7 @@
 		Electron <span id="electron-version"></span>
 	</footer>
 
-	<script>
-		const loadDoc = () => {
-			var xhttp = new XMLHttpRequest();
-			document.getElementById('messageButton').disabled = true
-			xhttp.onreadystatechange = (res) => {
-				if (res.target.readyState == 4) {
-					document.getElementById('messageButton').disabled = false
-				}
-				if (res.target.readyState == 4 && res.target.status == 200) {
-					document.getElementById('messageButton').disabled = true
-					document.getElementById('heading').innerHTML = res.target.responseText;
-					setTimeout(() => {
-						document.getElementById('messageButton').disabled = false
-						document.getElementById('heading').innerHTML = ''
-					}, 5000);
-				}
-			};
-			xhttp.open('GET', 'http://localhost:7259/api/hello', true);
-			xhttp.send();
-		}
-	</script>
+	<script src="./main.js"></script>
 </body>
 
 </html>
