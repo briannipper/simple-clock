@@ -10,7 +10,7 @@
     "build": "electron-packager . --out=build --overwrite"
   },
   "author": "nipper.brian@gmail.com",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "electron": "^18.2.4",
     "electron-packager": "^15.5.1"
