@@ -1,26 +1,33 @@
-function loadDoc (
-  msgButton,
-  msgHeading) {
+function loadDoc (msgButton: HTMLElement, msgHeading: HTMLElement) {
   const xhttp = new XMLHttpRequest()
-  msgButton.disabled = true
-  xhttp.onreadystatechange = (res) => {
-    if (res.target.readyState === 4) {
-      msgButton.disabled = false
-    }
-    if (res.target.readyState === 4 && res.target.status === 200) {
-      msgButton.disabled = true
-      msgHeading.innerHTML = res.target.responseText
-      setTimeout(() => {
-        msgButton.disabled = false
-        msgHeading.innerHTML = ''
-      }, 5000)
+  const msgBtnInputElem: HTMLInputElement = msgButton as HTMLInputElement
+  msgBtnInputElem.disabled = true
+  xhttp.onreadystatechange = function (res: Event) {
+    if (res.target !== null) {
+      res.target.addEventListener('readystatechange', () => {
+        if (this.readyState === 4) {
+          msgBtnInputElem.disabled = false
+        }
+        if (this.readyState === 4 && this.status === 200) {
+          msgBtnInputElem.disabled = true
+          msgHeading.innerHTML = this.responseText
+          setTimeout(() => {
+            msgBtnInputElem.disabled = false
+            msgHeading.innerHTML = ''
+          }, 5000)
+        }
+      })
     }
   }
   xhttp.open('GET', 'http://localhost:7259/api/hello', true)
   xhttp.send()
 }
 
-const msgButtonElm = document.getElementById('messageButton')
-const msgHeaderElm = document.getElementById('heading')
+const msgButtonElm: HTMLElement =
+  document.getElementById('messageButton') || new HTMLElement()
+const msgHeaderElm: HTMLElement =
+  document.getElementById('heading') || new HTMLElement()
 
-msgButtonElm.addEventListener('click', () => { loadDoc(msgButtonElm, msgHeaderElm) })
+msgButtonElm.addEventListener('click', () => {
+  loadDoc(msgButtonElm, msgHeaderElm)
+})
