@@ -11,7 +11,7 @@ const createWindow = () => {
     width: 600,
     height: 600,
     backgroundColor: '#ffffff',
-    autoHideMenuBar: true,
+    autoHideMenuBar: true
   })
 
   win.title = 'Simple Clock'
@@ -19,11 +19,9 @@ const createWindow = () => {
   win.on('closed', () => {
     win = null
   })
-
 }
 
 if (app) {
-
   app.on('ready', () => {
     createWindow()
   })
@@ -39,19 +37,18 @@ if (app) {
       createWindow()
     }
   })
-
 }
 
 const expressApp: express.Application = express()
 
-expressApp.use(express.static(path.join(__dirname, "../frontend")))
+expressApp.use(express.static(path.join(__dirname, '../frontend')))
 
-expressApp.get("/api/hello", async (req, res) => {
+expressApp.get('/api/hello', async (req, res) => {
   res.status(200).send('Howdy! From expressApp api end-point.')
 })
 
-expressApp.all("*", async (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/index.html"))
+expressApp.all('*', async (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/index.html'))
 })
 
 expressApp.listen(process.env.PORT || PORT, () => {
