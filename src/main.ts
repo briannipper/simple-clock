@@ -1,8 +1,8 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, Data } from 'electron'
 import express from 'express'
 import path from 'path'
 import { ClockApp } from './ClockApp'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 const PORT = 7259
 
@@ -56,13 +56,21 @@ expressApp.use(express.static(path.join(__dirname, '../frontend')))
 
 expressApp.use(express.static(path.join(__dirname, '../dist')))
 
-expressApp.get('/api/current/time', async (req, res) => {
+const getCurrentTime = async () => {
   try {
-    axios.get('https://www.timeapi.io/api/Time/current/zone?timeZone=America/New_York')
-      .then(data => res.status(200).send(data))
-      .catch(err => res.send(err))
+    const response = await axios.get('https://www.timeapi.io/api/Time/current/zone?timeZone=America/New_York')
+    return response
   } catch (err) {
-    console.error('GG', err)
+    console.error('axios-timeapi_io-get-current-time-api', err)
+  }
+}
+
+expressApp.get('/api/current/time', async (req, res) => {
+  const currentTime = await getCurrentTime()
+  if (currentTime !== null && currentTime !== undefined) {
+    res.status(200).send(currentTime.data)
+  } else {
+    res.status(404).send()
   }
 })
 
