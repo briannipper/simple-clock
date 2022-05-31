@@ -1,8 +1,8 @@
-import { app, BrowserWindow, Data } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import express from 'express'
 import path from 'path'
 import { ClockApp } from './ClockApp'
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 
 const PORT = 7259
 
