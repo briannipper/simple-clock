@@ -2,6 +2,7 @@ import { app, BrowserWindow } from 'electron'
 import express from 'express'
 import path from 'path'
 import { ClockApp } from './ClockApp'
+import axios from 'axios'
 
 const PORT = 7259
 
@@ -15,7 +16,9 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      devTools: true
+      devTools: true,
+      nodeIntegration: true,
+      contextIsolation: false
     },
     width: 600
   })
@@ -47,7 +50,21 @@ if (app) {
 
 const expressApp: express.Application = express()
 
+expressApp.disable('etag')
+
 expressApp.use(express.static(path.join(__dirname, '../frontend')))
+
+expressApp.use(express.static(path.join(__dirname, '../dist')))
+
+expressApp.get('/api/current/time', async (req, res) => {
+  try {
+    axios.get('https://www.timeapi.io/api/Time/current/zone?timeZone=America/New_York')
+      .then(data => res.status(200).send(data))
+      .catch(err => res.send(err))
+  } catch (err) {
+    console.error('GG', err)
+  }
+})
 
 expressApp.get('/api/hello', async (req, res) => {
   res.status(200).send('Howdy! From expressApp api end-point.')

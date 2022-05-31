@@ -1,7 +1,7 @@
 function loadDoc (msgButton: HTMLElement, msgHeading: HTMLElement) {
-  const xhttp = new XMLHttpRequest()
   const msgBtnInputElem: HTMLInputElement = msgButton as HTMLInputElement
   msgBtnInputElem.disabled = true
+  const xhttp = new XMLHttpRequest()
   xhttp.onreadystatechange = function (res: Event) {
     if (res.target !== null) {
       res.target.addEventListener('readystatechange', () => {
@@ -26,7 +26,7 @@ function loadDoc (msgButton: HTMLElement, msgHeading: HTMLElement) {
 const msgButtonElm: HTMLElement =
   document.getElementById('messageButton') || new HTMLElement()
 const msgHeaderElm: HTMLElement =
-  document.getElementById('heading') || new HTMLElement()
+  document.getElementById('messageHeader') || new HTMLElement()
 
 msgButtonElm.addEventListener('click', () => {
   loadDoc(msgButtonElm, msgHeaderElm)
