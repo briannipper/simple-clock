@@ -3,6 +3,7 @@ import express from 'express'
 import path from 'path'
 import { ClockApp } from './ClockApp'
 import axios from 'axios'
+import { CurrentTime } from './CurrentTime'
 
 const PORT = 7259
 
@@ -58,7 +59,7 @@ expressApp.use(express.static(path.join(__dirname, '../dist')))
 
 const getCurrentTime = async () => {
   try {
-    const response = await axios.get('https://www.timeapi.io/api/Time/current/zone?timeZone=America/New_York')
+    const response = await axios.get<{ data: CurrentTime }>('https://www.timeapi.io/api/Time/current/zone?timeZone=America/New_York')
     return response
   } catch (err) {
     console.error('axios-timeapi_io-get-current-time-api', err)
