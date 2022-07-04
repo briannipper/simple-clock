@@ -1,7 +1,8 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, Menu } from 'electron'
 import path from 'path'
 import { ClockApp } from './ClockApp'
 import ExpressServer from './backend/express-app'
+import { mainMenu } from './menuTemplate'
 
 let win: BrowserWindow | null
 const clockApp: ClockApp = new ClockApp()
@@ -9,7 +10,6 @@ const expServer = ExpressServer
 
 const createWindow = () => {
   win = new BrowserWindow({
-    autoHideMenuBar: true,
     backgroundColor: '#ffffff',
     height: 600,
     webPreferences: {
@@ -23,7 +23,6 @@ const createWindow = () => {
 
   win.title = clockApp.appTitle
   win.loadURL(`http://localhost:${expServer.port}`)
-  win.webContents.openDevTools()
   win.on('closed', () => {
     win = null
   })
@@ -32,6 +31,7 @@ const createWindow = () => {
 if (app) {
   app.on('ready', () => {
     createWindow()
+    Menu.setApplicationMenu(mainMenu)
   })
 
   app.on('window-all-closed', () => {
