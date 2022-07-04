@@ -1,14 +1,11 @@
 import { app, BrowserWindow } from 'electron'
-import express from 'express'
 import path from 'path'
 import { ClockApp } from './ClockApp'
-import axios from 'axios'
-import { CurrentTime } from './CurrentTime'
-
-const PORT = 7259
+import ExpressServer from './backend/express-app'
 
 let win: BrowserWindow | null
 const clockApp: ClockApp = new ClockApp()
+const expServer = ExpressServer
 
 const createWindow = () => {
   win = new BrowserWindow({
@@ -25,7 +22,7 @@ const createWindow = () => {
   })
 
   win.title = clockApp.appTitle
-  win.loadURL(`http://localhost:${PORT}`)
+  win.loadURL(`http://localhost:${expServer.port}`)
   win.on('closed', () => {
     win = null
   })
@@ -48,41 +45,3 @@ if (app) {
     }
   })
 }
-
-const expressApp: express.Application = express()
-
-expressApp.disable('etag')
-
-expressApp.use(express.static(path.join(__dirname, '../frontend')))
-
-expressApp.use(express.static(path.join(__dirname, '../dist')))
-
-const getCurrentTime = async () => {
-  try {
-    const response = await axios.get<{ data: CurrentTime }>('https://www.timeapi.io/api/Time/current/zone?timeZone=America/New_York')
-    return response
-  } catch (err) {
-    console.error('axios-timeapi_io-get-current-time-api', err)
-  }
-}
-
-expressApp.get('/api/current/time', async (req, res) => {
-  const currentTime = await getCurrentTime()
-  if (currentTime !== null && currentTime !== undefined) {
-    res.status(200).send(currentTime.data)
-  } else {
-    res.status(404).send()
-  }
-})
-
-expressApp.get('/api/hello', async (req, res) => {
-  res.status(200).send('Howdy! From expressApp api end-point.')
-})
-
-expressApp.all('*', async (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/index.html'))
-})
-
-expressApp.listen(process.env.PORT || PORT, () => {
-  console.log(`Running (port ${process.env.PORT || PORT})`)
-})
