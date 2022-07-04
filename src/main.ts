@@ -23,6 +23,7 @@ const createWindow = () => {
 
   win.title = clockApp.appTitle
   win.loadURL(`http://localhost:${expServer.port}`)
+  win.webContents.openDevTools()
   win.on('closed', () => {
     win = null
   })

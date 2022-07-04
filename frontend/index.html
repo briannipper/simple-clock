@@ -44,6 +44,10 @@
 		Electron <span id="electron-version"></span>
 	</footer>
 
+	<script>
+		// hack: this allows the transpiled typescript to load without error
+		var exports = {};
+	</script>
 	<script src="/app.js"></script>
 	<script src="/time.js"></script>
 </body>

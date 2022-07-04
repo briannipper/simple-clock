@@ -1,3 +1,5 @@
+import { CurrentTime } from './CurrentTime'
+
 function loadCurrentTimeZone (
   clockBtn: HTMLElement,
   clockHeader: HTMLElement,
@@ -13,8 +15,9 @@ function loadCurrentTimeZone (
         }
         if (this.readyState === 4 && this.status === 200) {
           clockBtnInputElem.disabled = true
-          clockHeader.innerHTML = this.responseText
-          elmCollection[0].elm.innerHTML = 'YEAR'
+          const currentTime: CurrentTime = JSON.parse(this.responseText)
+          clockHeader.innerHTML = currentTime.dateTime
+          elmCollection[0].elm.innerHTML = 'YEAR: ' + currentTime.year
           setTimeout(() => {
             clockBtnInputElem.disabled = false
             clockHeader.innerHTML = ''
@@ -23,6 +26,7 @@ function loadCurrentTimeZone (
       })
     }
   }
+
   xhttp.open('GET', 'http://localhost:7259/api/current/time', true)
   xhttp.send()
 }
