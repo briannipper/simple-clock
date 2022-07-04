@@ -45,10 +45,6 @@ class ExpressServer {
       }
     })
 
-    this.app.get('/api/hello', async (req, res) => {
-      res.status(200).send('Howdy! From expressApp api end-point.')
-    })
-
     this.app.all('*', async (req, res) => {
       res.sendFile(path.join(__dirname, '../../frontend/index.html'))
     })
