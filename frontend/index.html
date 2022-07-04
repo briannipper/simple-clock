@@ -1,28 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'nonce-2ysnUCOje9FbH';">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title id="app-title"></title>
-	<style>
-		@media (prefers-color-scheme: dark) {
-			html {
-				background-color: #222222;
-				color: white;
-			}
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="/main.css">
 </head>
 
-<body style="font-family: Arial, Helvetica, sans-serif;">
-
-	<div>
-		<button id="messageButton" type='button'>Get Message</button>
-		<h2 id='messageHeader'></h2>
-	</div>
-
+<body>
 	<div>
 		<button id="clockButton" type='button'>Load Clock</button>
 		<div id="clockHeading"></div>
@@ -38,17 +25,17 @@
 		</div>
 	</div>
 
-	<footer style="font-size: 9px;">
+	<footer>
 		Node.js <span id="node-version"></span><br />
 		Chromium <span id="chrome-version"></span><br />
 		Electron <span id="electron-version"></span>
 	</footer>
 
-	<script>
+	<script nonce="2ysnUCOje9FbH">
 		// hack: this allows the transpiled typescript to load without error
 		var exports = {};
 	</script>
-	<script src="/app.js"></script>
 	<script src="/time.js"></script>
 </body>
+
 </html>
